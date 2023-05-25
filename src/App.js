@@ -1,17 +1,18 @@
-
 import './App.css';
 import {Provider} from 'react-redux'
-import Counter from './Componantes/CounterApp/Counter';
-import store from './Redux/store';
+
+import ReduxTodo from './Componantes/Redux2/ReduxTodo'
+import store from './Componantes/Redux2/store'
 
 
 function App() {
  
   return (
     <>
-     <Provider store={store}>
+     <Provider  store={store}>
      <header className="App-header">
-     <Counter />
+   
+    <ReduxTodo />
      
      </header>
       </Provider>
