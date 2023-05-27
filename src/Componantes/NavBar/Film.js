@@ -1,22 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import './Film.css'
-import { useDispatch } from 'react-redux'
+import { useDispatch , useSelector } from 'react-redux'
 import { addItem } from '../../store/CartSlice'
+import {STATUSES, fetchProduct} from '../../store/ProductSlice'
+
 
 const Film = () => {
     const dispatch = useDispatch();
 
-
-    const [Films,setFilms] = useState([])
+     const { data: Films , status } = useSelector((state) => state.product) 
+    // const [Films,setFilms] = useState([])
     useEffect(() => {
-        const fetchFilm = async() => {
-            const res = await fetch('https://fakestoreapi.com/products')
+        dispatch(fetchProduct()); 
 
-            const data = await res.json();
-            console.log(data)
-            setFilms(data)
-        };
-        fetchFilm()
+        // const fetchFilm = async() => {
+        //     const res = await fetch('https://fakestoreapi.com/products')
+
+        //     const data = await res.json();
+        //     console.log(data)
+        //     setFilms(data)
+        // };
+        // fetchFilm()
 
 
     },[]);
@@ -25,7 +29,17 @@ const Film = () => {
     const handleAdd = (film) => {
         dispatch(addItem(film));
 
+    };
+
+    if(status === STATUSES.LOADING){
+      return <h2>Loading ...</h2>
     }
+
+    if(status === STATUSES.ERROR){
+      return <h2>SOmeThing Wants Wrong.....</h2>
+    }
+
+    
   return (
     <div className='FilmsWrapper'>
     {
